@@ -1,28 +1,45 @@
-import React from 'react';
-
+// shop.js
+import React, { useState } from "react";
+import Productcard from "../components/Productcard";
+import Cart from "../components/Cart";
 
 const Shop = () => {
-    // Define your product data
-    const products = [
-        { id: 1, name: 'Product 1', price: 10 },
-        { id: 2, name: 'Product 2', price: 20 },
-        { id: 3, name: 'Product 3', price: 30 },
-    ];
+  const [isCartVisible, setIsCartVisible] = useState(false);
 
-    return (
-        <div>
-            <h1>Shop</h1>
-            <ul>
-                {products.map((product) => (
-                    <li key={product.id}>
-                        <h3>{product.name}</h3>
-                        <p>Price: ${product.price}</p>
-                        <button>Add to Cart</button>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  // Sample product data
+  const sampleProduct = {
+    id: 1,
+    name: "Sample Product",
+    description: "This is a sample product description.",
+    price: 19.99,
+    imageURL: "https://example.com/sample-image.jpg",
+    // Add other properties as needed
+  };
+
+  const handleShowCart = () => {
+    setIsCartVisible(true);
+  };
+
+  const handleHideCart = () => {
+    setIsCartVisible(false);
+  };
+
+  return (
+    <div>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
+        onClick={handleShowCart}
+      >
+        Show Cart
+      </button>
+
+      {isCartVisible && (
+        <Cart isVisible={isCartVisible} onHide={handleHideCart} />
+      )}
+
+      <Productcard product={sampleProduct} />
+    </div>
+  );
 };
 
 export default Shop;

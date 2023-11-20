@@ -1,38 +1,13 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-
-import Login from "./../components/Login";
-import Logout from "./../components/Logout";
-import Register from "./../components/Register";
+import React from 'react';
 
 const Home = () => {
   return (
-    <BrowserRouter>
-      <div>
-        <h1>Welcome to our Ecommerce Website!</h1>
-        <h1>React Firebase Authentication</h1>
-
-        <nav>
-          <ul>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/logout">Logout</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
+    <div className="text-3xl font-bold">
+      sdf
+      <div className="bg-blue-500 text-white p-4">
+        This is a Tailwind-styled div.
       </div>
-    </BrowserRouter>
+    </div>
   );
 };
 
