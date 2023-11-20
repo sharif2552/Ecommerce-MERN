@@ -32,8 +32,24 @@ const Cart = ({ isVisible, onHide }) => {
       }`}
     >
       <div className="flex justify-end">
-        <button className="text-gray-500 hover:text-gray-700" onClick={onHide}>
-          Close
+        <button
+          className="text-gray-500 hover:text-gray-700 focus:outline-none"
+          onClick={onHide}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </button>
       </div>
       <h2 className="text-2xl font-semibold mb-4">Shopping Cart</h2>
@@ -44,7 +60,7 @@ const Cart = ({ isVisible, onHide }) => {
         <div>
           <ul>
             {cartSummary.map((item) => (
-              <li key={item.id} className="mb-4">
+              <li key={item.id} className="mb-4 flex items-center">
                 {item.imageURL && (
                   <img
                     src={item.imageURL}

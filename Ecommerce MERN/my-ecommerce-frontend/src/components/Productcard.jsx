@@ -11,7 +11,7 @@ const Productcard = ({ product }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8">
+    <div className="w-[300px] h-[420px] shadow-sm rounded-2xl p-4 bg-slate-50 dark:bg-[#1f1b24] dark:hover:bg-[#121015] dark:text-white dark:outline-none dark:border-none border border-slate-100 outline outline-slate-100  hover:shadow-2xl relative">
       <div className="mb-4">
         <img
           src={product?.imageURL}
@@ -33,7 +33,7 @@ const Productcard = ({ product }) => {
         </span>
 
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md md:px-6 md:py-3 lg:px-8 lg:py-4"
+          className="absolute bg-slate-800 dark:bg-slate-800 dark:font-semibold text-white text-xl p-2 top-2 right-2 rounded-md animate-pulse"
           onClick={handleAddToCart}
         >
           Add to Cart
