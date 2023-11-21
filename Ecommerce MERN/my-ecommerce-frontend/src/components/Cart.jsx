@@ -1,11 +1,15 @@
 // Cart.js
 import React from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { deleteProduct } from "../redux/slices/slices";
-import { increase } from "../redux/slices/slices";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  deleteProduct,
+  increase,
+  decrease,
+} from "../redux/slices/slices";
+
 const Cart = ({ isVisible, onHide }) => {
   const cartItems = useSelector((state) => state.product.cart);
+  const dispatch = useDispatch();
 
   // Calculate the total price and quantity of each unique product
   const cartSummary = cartItems.reduce((summary, item) => {
@@ -14,7 +18,7 @@ const Cart = ({ isVisible, onHide }) => {
     );
 
     if (existingItem) {
-      existingItem.quantity += 1;
+      existingItem.quantity = item.quantity; // Update quantity from state
     } else {
       summary.push({ ...item, quantity: 1 });
     }
@@ -26,14 +30,18 @@ const Cart = ({ isVisible, onHide }) => {
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const dispatch = useDispatch();
 
   const handleDelete = (product) => {
     dispatch(deleteProduct(product));
   };
-  const handleIncrease = (product) => {  
+
+  const handleIncrease = (product) => {
     dispatch(increase(product));
-  }
+  };
+
+  const handleDecrease = (product) => {
+    dispatch(decrease(product));
+  };
 
   return (
     <div
@@ -84,12 +92,22 @@ const Cart = ({ isVisible, onHide }) => {
                     ${item.price} (Quantity: {item.quantity})
                   </p>
                 </div>
-                <div>
-                  <button onClick={handleIncrease} className="ml-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-2 py-1 rounded-md">
-                    increase
+
+                <div className="flex items-center">
+                  <button
+                    onClick={() => handleDecrease(item)}
+                    className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-2 py-1 rounded-md"
+                  >
+                    -
+                  </button>
+                  <p className="mx-2">{item.quantity}</p>
+                  <button
+                    onClick={() => handleIncrease(item)}
+                    className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-2 py-1 rounded-md"
+                  >
+                    +
                   </button>
                 </div>
-
 
                 <div className="">
                   <button

@@ -14,7 +14,15 @@ const productSlice = createSlice({
       state.selectedProduct = action.payload;
     },
     addToCart: (state, action) => {
-      state.cart.push(action.payload);
+      const existingProduct = state.cart.find(
+        (product) => product.id === action.payload.id
+      );
+
+      if (existingProduct) {
+        existingProduct.quantity += 1;
+      } else {
+        state.cart.push({ ...action.payload, quantity: 1 });
+      }
     },
     deleteProduct: (state, action) => {
       state.cart = state.cart.filter(
@@ -22,25 +30,31 @@ const productSlice = createSlice({
       );
     },
     increase: (state, action) => {
-      const index = state.cart.findIndex(
-        (cartItem) => cartItem.id === action.payload.id
+      const existingProduct = state.cart.find(
+        (product) => product.id === action.payload.id
       );
 
-      // Check if the product is in the cart
-      if (index !== -1) {
-        // If quantity property does not exist, initialize it to 1
-        if (!state.cart[index].quantity) {
-          state.cart[index].quantity = 1;
-        } else {
-          // Increment the quantity
-          state.cart[index].quantity += 1;
-        }
+      if (existingProduct) {
+        existingProduct.quantity += 1;
+      }
+    },
+    decrease: (state, action) => {
+      const existingProduct = state.cart.find(
+        (product) => product.id === action.payload.id
+      );
+
+      if (existingProduct && existingProduct.quantity > 1) {
+        existingProduct.quantity -= 1;
+      } else {
+        state.cart = state.cart.filter(
+          (product) => product.id !== action.payload.id
+        );
       }
     },
   },
 });
 
-export const { selectProduct, addToCart, deleteProduct, increase } =
+export const { selectProduct, addToCart, deleteProduct, increase, decrease } =
   productSlice.actions;
 export const selectSelectedProduct = (state) => state.product.selectedProduct;
 export const selectCart = (state) => state.product.cart;
