@@ -1,7 +1,9 @@
 // Cart.js
 import React from "react";
 import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { deleteProduct } from "../redux/slices/slices";
+import { increase } from "../redux/slices/slices";
 const Cart = ({ isVisible, onHide }) => {
   const cartItems = useSelector((state) => state.product.cart);
 
@@ -24,6 +26,14 @@ const Cart = ({ isVisible, onHide }) => {
     (total, item) => total + item.price * item.quantity,
     0
   );
+  const dispatch = useDispatch();
+
+  const handleDelete = (product) => {
+    dispatch(deleteProduct(product));
+  };
+  const handleIncrease = (product) => {  
+    dispatch(increase(product));
+  }
 
   return (
     <div
@@ -73,6 +83,21 @@ const Cart = ({ isVisible, onHide }) => {
                   <p className="text-gray-600">
                     ${item.price} (Quantity: {item.quantity})
                   </p>
+                </div>
+                <div>
+                  <button onClick={handleIncrease} className="ml-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-2 py-1 rounded-md">
+                    increase
+                  </button>
+                </div>
+
+
+                <div className="">
+                  <button
+                    onClick={() => handleDelete(item)}
+                    className="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold px-2 py-1 rounded-md"
+                  >
+                    Delete
+                  </button>
                 </div>
               </li>
             ))}
