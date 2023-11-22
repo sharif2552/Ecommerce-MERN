@@ -1,20 +1,27 @@
 // src/components/Login.js
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux"; // Import useDispatch and useSelector
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase"; // Import auth object
+import { auth } from "../firebase";
+import { login, logout } from "../redux/slices/authSlice"; // Import login and logout actions
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false); // New state to track login status
+
+  // Use useSelector to access the loggedIn state from the store
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+
+  // Use useDispatch to dispatch login and logout actions
+  const dispatch = useDispatch();
 
   // Check if user is logged in on component mount
   useEffect(() => {
     const storedLoggedIn = localStorage.getItem("loggedIn");
     if (storedLoggedIn === "true") {
-      setLoggedIn(true);
+      dispatch(login()); // Dispatch login action
     }
-  }, []);
+  }, [dispatch]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,16 +34,16 @@ const Login = () => {
       );
       const user = userCredential.user;
       console.log("User logged in:", user);
-      setLoggedIn(true); // Update login status
-      localStorage.setItem("loggedIn", "true"); // Persist login status
+      dispatch(login()); // Dispatch login action
+      localStorage.setItem("loggedIn", "true");
     } catch (error) {
       console.error("Login error:", error.message);
     }
   };
 
   const handleLogout = () => {
-    setLoggedIn(false);
-    localStorage.removeItem("loggedIn"); // Remove login status from localStorage
+    dispatch(logout()); // Dispatch logout action
+    localStorage.removeItem("loggedIn");
   };
 
   return (

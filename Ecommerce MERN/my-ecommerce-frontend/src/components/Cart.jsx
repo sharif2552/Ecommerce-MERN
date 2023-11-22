@@ -1,32 +1,14 @@
 // Cart.js
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  deleteProduct,
-  increase,
-  decrease,
-} from "../redux/slices/slices";
+import { deleteProduct, increase, decrease } from "../redux/slices/slices";
 
 const Cart = ({ isVisible, onHide }) => {
   const cartItems = useSelector((state) => state.product.cart);
   const dispatch = useDispatch();
 
   // Calculate the total price and quantity of each unique product
-  const cartSummary = cartItems.reduce((summary, item) => {
-    const existingItem = summary.find(
-      (summaryItem) => summaryItem.id === item.id
-    );
-
-    if (existingItem) {
-      existingItem.quantity = item.quantity; // Update quantity from state
-    } else {
-      summary.push({ ...item, quantity: 1 });
-    }
-
-    return summary;
-  }, []);
-
-  const totalPrice = cartSummary.reduce(
+  const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
@@ -45,7 +27,7 @@ const Cart = ({ isVisible, onHide }) => {
 
   return (
     <div
-      className={`fixed right-4 top-4 bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8 ${
+      className={`z-50 fixed right-4 top-4 bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8 ${
         isVisible ? "block" : "hidden"
       }`}
     >
@@ -77,7 +59,7 @@ const Cart = ({ isVisible, onHide }) => {
       ) : (
         <div>
           <ul>
-            {cartSummary.map((item) => (
+            {cartItems.map((item) => (
               <li key={item.id} className="mb-4 flex items-center">
                 {item.imageURL && (
                   <img
@@ -89,7 +71,7 @@ const Cart = ({ isVisible, onHide }) => {
                 <div>
                   <h3 className="text-lg font-semibold">{item.name}</h3>
                   <p className="text-gray-600">
-                    ${item.price} (Quantity: {item.quantity})
+                    ${item.price} 
                   </p>
                 </div>
 

@@ -10,7 +10,7 @@ const App = () => {
     <Provider store={store}>
       <div>
         <AuthenticationPage />
-        <Cart />
+
         {/* Add other components and features as needed */}
       </div>
     </Provider>
