@@ -16,7 +16,7 @@ const AuthenticationPage = () => {
       {loggedIn ? (
         <div>
         
-        <Shop /> 
+        
         </div>
        
         

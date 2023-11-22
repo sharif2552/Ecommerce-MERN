@@ -11,6 +11,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <div>
+        
         <Routes />
         <AuthenticationPage />
 
