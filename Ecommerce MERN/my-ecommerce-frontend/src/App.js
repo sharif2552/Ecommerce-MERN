@@ -13,7 +13,7 @@ const App = () => {
       <div>
         
         <Routes />
-        <AuthenticationPage />
+        
 
         {/* Add other components and features as needed */}
       </div>
